@@ -8,8 +8,6 @@ package auth
 
 import (
 	context "context"
-	"equi_genea_auth_service/internal/app"
-
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -110,7 +108,7 @@ type UnsafeAuthServiceServer interface {
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
-func RegisterAuthServiceServer(s grpc.ServiceRegistrar, srv *app.AccountHandler) {
+func RegisterAuthServiceServer(s grpc.ServiceRegistrar, srv AuthServiceServer) {
 	// If the following call pancis, it indicates UnimplementedAuthServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
