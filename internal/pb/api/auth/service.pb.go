@@ -9,6 +9,7 @@ package auth
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -67,7 +68,7 @@ func (x *GenerateTokenRequest) GetId() string {
 
 type GenerateTokenResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -109,17 +110,157 @@ func (x *GenerateTokenResponse) GetToken() string {
 	return ""
 }
 
+type HashPasswordRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Password      string                 `protobuf:"bytes,1,opt,name=password,proto3" json:"password,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *HashPasswordRequest) Reset() {
+	*x = HashPasswordRequest{}
+	mi := &file_api_auth_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HashPasswordRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HashPasswordRequest) ProtoMessage() {}
+
+func (x *HashPasswordRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_auth_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HashPasswordRequest.ProtoReflect.Descriptor instead.
+func (*HashPasswordRequest) Descriptor() ([]byte, []int) {
+	return file_api_auth_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *HashPasswordRequest) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+type HashPasswordResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Hash          string                 `protobuf:"bytes,1,opt,name=hash,proto3" json:"hash,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *HashPasswordResponse) Reset() {
+	*x = HashPasswordResponse{}
+	mi := &file_api_auth_service_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HashPasswordResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HashPasswordResponse) ProtoMessage() {}
+
+func (x *HashPasswordResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_auth_service_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HashPasswordResponse.ProtoReflect.Descriptor instead.
+func (*HashPasswordResponse) Descriptor() ([]byte, []int) {
+	return file_api_auth_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *HashPasswordResponse) GetHash() string {
+	if x != nil {
+		return x.Hash
+	}
+	return ""
+}
+
+type GeneratePasswordResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Password      string                 `protobuf:"bytes,1,opt,name=password,proto3" json:"password,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GeneratePasswordResponse) Reset() {
+	*x = GeneratePasswordResponse{}
+	mi := &file_api_auth_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GeneratePasswordResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GeneratePasswordResponse) ProtoMessage() {}
+
+func (x *GeneratePasswordResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_auth_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GeneratePasswordResponse.ProtoReflect.Descriptor instead.
+func (*GeneratePasswordResponse) Descriptor() ([]byte, []int) {
+	return file_api_auth_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GeneratePasswordResponse) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
 var File_api_auth_service_proto protoreflect.FileDescriptor
 
 const file_api_auth_service_proto_rawDesc = "" +
 	"\n" +
-	"\x16api/auth/service.proto\x12\x04auth\"&\n" +
+	"\x16api/auth/service.proto\x12\x04auth\x1a\x1bgoogle/protobuf/empty.proto\"&\n" +
 	"\x14GenerateTokenRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"-\n" +
 	"\x15GenerateTokenResponse\x12\x14\n" +
-	"\x05token\x18\x02 \x01(\tR\x05token2W\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"1\n" +
+	"\x13HashPasswordRequest\x12\x1a\n" +
+	"\bpassword\x18\x01 \x01(\tR\bpassword\"*\n" +
+	"\x14HashPasswordResponse\x12\x12\n" +
+	"\x04hash\x18\x01 \x01(\tR\x04hash\"6\n" +
+	"\x18GeneratePasswordResponse\x12\x1a\n" +
+	"\bpassword\x18\x01 \x01(\tR\bpassword2\xea\x01\n" +
 	"\vAuthService\x12H\n" +
-	"\rGenerateToken\x12\x1a.auth.GenerateTokenRequest\x1a\x1b.auth.GenerateTokenResponseB\x0fZ\rapi/auth;authb\x06proto3"
+	"\rGenerateToken\x12\x1a.auth.GenerateTokenRequest\x1a\x1b.auth.GenerateTokenResponse\x12E\n" +
+	"\fHashPassword\x12\x19.auth.HashPasswordRequest\x1a\x1a.auth.HashPasswordResponse\x12J\n" +
+	"\x10GeneratePassword\x12\x16.google.protobuf.Empty\x1a\x1e.auth.GeneratePasswordResponseB\x0fZ\rapi/auth;authb\x06proto3"
 
 var (
 	file_api_auth_service_proto_rawDescOnce sync.Once
@@ -133,16 +274,24 @@ func file_api_auth_service_proto_rawDescGZIP() []byte {
 	return file_api_auth_service_proto_rawDescData
 }
 
-var file_api_auth_service_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_api_auth_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_api_auth_service_proto_goTypes = []any{
-	(*GenerateTokenRequest)(nil),  // 0: auth.GenerateTokenRequest
-	(*GenerateTokenResponse)(nil), // 1: auth.GenerateTokenResponse
+	(*GenerateTokenRequest)(nil),     // 0: auth.GenerateTokenRequest
+	(*GenerateTokenResponse)(nil),    // 1: auth.GenerateTokenResponse
+	(*HashPasswordRequest)(nil),      // 2: auth.HashPasswordRequest
+	(*HashPasswordResponse)(nil),     // 3: auth.HashPasswordResponse
+	(*GeneratePasswordResponse)(nil), // 4: auth.GeneratePasswordResponse
+	(*emptypb.Empty)(nil),            // 5: google.protobuf.Empty
 }
 var file_api_auth_service_proto_depIdxs = []int32{
 	0, // 0: auth.AuthService.GenerateToken:input_type -> auth.GenerateTokenRequest
-	1, // 1: auth.AuthService.GenerateToken:output_type -> auth.GenerateTokenResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
+	2, // 1: auth.AuthService.HashPassword:input_type -> auth.HashPasswordRequest
+	5, // 2: auth.AuthService.GeneratePassword:input_type -> google.protobuf.Empty
+	1, // 3: auth.AuthService.GenerateToken:output_type -> auth.GenerateTokenResponse
+	3, // 4: auth.AuthService.HashPassword:output_type -> auth.HashPasswordResponse
+	4, // 5: auth.AuthService.GeneratePassword:output_type -> auth.GeneratePasswordResponse
+	3, // [3:6] is the sub-list for method output_type
+	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -159,7 +308,7 @@ func file_api_auth_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_auth_service_proto_rawDesc), len(file_api_auth_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

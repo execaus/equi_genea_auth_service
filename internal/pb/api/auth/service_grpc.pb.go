@@ -8,9 +8,12 @@ package auth
 
 import (
 	context "context"
+	"equi_genea_auth_service/internal/app"
+
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,7 +22,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AuthService_GenerateToken_FullMethodName = "/auth.AuthService/GenerateToken"
+	AuthService_GenerateToken_FullMethodName    = "/auth.AuthService/GenerateToken"
+	AuthService_HashPassword_FullMethodName     = "/auth.AuthService/HashPassword"
+	AuthService_GeneratePassword_FullMethodName = "/auth.AuthService/GeneratePassword"
 )
 
 // AuthServiceClient is the client API for AuthService service.
@@ -27,6 +32,8 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthServiceClient interface {
 	GenerateToken(ctx context.Context, in *GenerateTokenRequest, opts ...grpc.CallOption) (*GenerateTokenResponse, error)
+	HashPassword(ctx context.Context, in *HashPasswordRequest, opts ...grpc.CallOption) (*HashPasswordResponse, error)
+	GeneratePassword(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GeneratePasswordResponse, error)
 }
 
 type authServiceClient struct {
@@ -47,11 +54,33 @@ func (c *authServiceClient) GenerateToken(ctx context.Context, in *GenerateToken
 	return out, nil
 }
 
+func (c *authServiceClient) HashPassword(ctx context.Context, in *HashPasswordRequest, opts ...grpc.CallOption) (*HashPasswordResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HashPasswordResponse)
+	err := c.cc.Invoke(ctx, AuthService_HashPassword_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) GeneratePassword(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GeneratePasswordResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GeneratePasswordResponse)
+	err := c.cc.Invoke(ctx, AuthService_GeneratePassword_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility.
 type AuthServiceServer interface {
 	GenerateToken(context.Context, *GenerateTokenRequest) (*GenerateTokenResponse, error)
+	HashPassword(context.Context, *HashPasswordRequest) (*HashPasswordResponse, error)
+	GeneratePassword(context.Context, *emptypb.Empty) (*GeneratePasswordResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -65,6 +94,12 @@ type UnimplementedAuthServiceServer struct{}
 func (UnimplementedAuthServiceServer) GenerateToken(context.Context, *GenerateTokenRequest) (*GenerateTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GenerateToken not implemented")
 }
+func (UnimplementedAuthServiceServer) HashPassword(context.Context, *HashPasswordRequest) (*HashPasswordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HashPassword not implemented")
+}
+func (UnimplementedAuthServiceServer) GeneratePassword(context.Context, *emptypb.Empty) (*GeneratePasswordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GeneratePassword not implemented")
+}
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 func (UnimplementedAuthServiceServer) testEmbeddedByValue()                     {}
 
@@ -75,7 +110,7 @@ type UnsafeAuthServiceServer interface {
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
-func RegisterAuthServiceServer(s grpc.ServiceRegistrar, srv AuthServiceServer) {
+func RegisterAuthServiceServer(s grpc.ServiceRegistrar, srv *app.AccountHandler) {
 	// If the following call pancis, it indicates UnimplementedAuthServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
@@ -104,6 +139,42 @@ func _AuthService_GenerateToken_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_HashPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HashPasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).HashPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_HashPassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).HashPassword(ctx, req.(*HashPasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_GeneratePassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).GeneratePassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_GeneratePassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).GeneratePassword(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +185,14 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GenerateToken",
 			Handler:    _AuthService_GenerateToken_Handler,
+		},
+		{
+			MethodName: "HashPassword",
+			Handler:    _AuthService_HashPassword_Handler,
+		},
+		{
+			MethodName: "GeneratePassword",
+			Handler:    _AuthService_GeneratePassword_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

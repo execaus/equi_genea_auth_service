@@ -24,7 +24,7 @@ func main() {
 	}
 
 	grpcServer := grpc.NewServer()
-	accountService := service.NewAuthService()
+	accountService := service.NewAuthService(&cfg.Auth)
 	handler := app.NewAccountHandler(accountService)
 
 	authpb.RegisterAuthServiceServer(grpcServer, handler)
