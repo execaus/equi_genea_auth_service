@@ -3,7 +3,7 @@ module equi_genea_auth_service
 go 1.25
 
 require (
-	github.com/execaus/equi_genea_api_contracts v1.23.1 // indirect
+	github.com/execaus/equi_genea_api_contracts v1.24.2 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
 	github.com/golang-jwt/jwt/v5 v5.3.0 // indirect

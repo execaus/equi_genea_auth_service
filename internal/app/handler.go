@@ -40,6 +40,17 @@ func (h *AccountHandler) GeneratePassword(ctx context.Context, in *emptypb.Empty
 	return &authpb.GeneratePasswordResponse{Password: password}, nil
 }
 
+func (h *AccountHandler) GetClaimsFromToken(ctx context.Context, in *authpb.GetClaimsFromTokenRequest) (*authpb.GetClaimsFromTokenResponse, error) {
+	claims, err := h.service.GetClaims(in.Token)
+	if err != nil {
+		return nil, err
+	}
+
+	return &authpb.GetClaimsFromTokenResponse{
+		Claims: &authpb.AuthClaims{AccountId: claims.AccountID},
+	}, nil
+}
+
 func NewAccountHandler(service *service.AuthService) *AccountHandler {
 	return &AccountHandler{service: service}
 }
