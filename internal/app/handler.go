@@ -13,6 +13,15 @@ type AccountHandler struct {
 	authpb.UnimplementedAuthServiceServer
 }
 
+func (h *AccountHandler) ComparePassword(ctx context.Context, in *authpb.ComparePasswordRequest) (*authpb.ComparePasswordResponse, error) {
+	err := h.service.ComparePassword(in.HashedPassword, in.Password)
+	if err != nil {
+		return nil, err
+	}
+
+	return &authpb.ComparePasswordResponse{IsMatch: true}, nil
+}
+
 func (h *AccountHandler) GenerateToken(ctx context.Context, in *authpb.GenerateTokenRequest) (*authpb.GenerateTokenResponse, error) {
 	token, err := h.service.GenerateJWT(in.Id)
 	if err != nil {

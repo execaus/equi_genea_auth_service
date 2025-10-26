@@ -330,6 +330,102 @@ func (x *GetClaimsFromTokenResponse) GetClaims() *AuthClaims {
 	return nil
 }
 
+type ComparePasswordRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	HashedPassword string                 `protobuf:"bytes,1,opt,name=hashedPassword,proto3" json:"hashedPassword,omitempty"`
+	Password       string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ComparePasswordRequest) Reset() {
+	*x = ComparePasswordRequest{}
+	mi := &file_api_auth_service_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ComparePasswordRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ComparePasswordRequest) ProtoMessage() {}
+
+func (x *ComparePasswordRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_auth_service_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ComparePasswordRequest.ProtoReflect.Descriptor instead.
+func (*ComparePasswordRequest) Descriptor() ([]byte, []int) {
+	return file_api_auth_service_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ComparePasswordRequest) GetHashedPassword() string {
+	if x != nil {
+		return x.HashedPassword
+	}
+	return ""
+}
+
+func (x *ComparePasswordRequest) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+type ComparePasswordResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IsMatch       bool                   `protobuf:"varint,1,opt,name=is_match,json=isMatch,proto3" json:"is_match,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ComparePasswordResponse) Reset() {
+	*x = ComparePasswordResponse{}
+	mi := &file_api_auth_service_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ComparePasswordResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ComparePasswordResponse) ProtoMessage() {}
+
+func (x *ComparePasswordResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_auth_service_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ComparePasswordResponse.ProtoReflect.Descriptor instead.
+func (*ComparePasswordResponse) Descriptor() ([]byte, []int) {
+	return file_api_auth_service_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ComparePasswordResponse) GetIsMatch() bool {
+	if x != nil {
+		return x.IsMatch
+	}
+	return false
+}
+
 var File_api_auth_service_proto protoreflect.FileDescriptor
 
 const file_api_auth_service_proto_rawDesc = "" +
@@ -348,12 +444,18 @@ const file_api_auth_service_proto_rawDesc = "" +
 	"\x19GetClaimsFromTokenRequest\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\"H\n" +
 	"\x1aGetClaimsFromTokenResponse\x12*\n" +
-	"\x06claims\x18\x01 \x01(\v2\x12.models.AuthClaimsR\x06claims2\xc3\x02\n" +
+	"\x06claims\x18\x01 \x01(\v2\x12.models.AuthClaimsR\x06claims\"\\\n" +
+	"\x16ComparePasswordRequest\x12&\n" +
+	"\x0ehashedPassword\x18\x01 \x01(\tR\x0ehashedPassword\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"4\n" +
+	"\x17ComparePasswordResponse\x12\x19\n" +
+	"\bis_match\x18\x01 \x01(\bR\aisMatch2\x93\x03\n" +
 	"\vAuthService\x12H\n" +
 	"\rGenerateToken\x12\x1a.auth.GenerateTokenRequest\x1a\x1b.auth.GenerateTokenResponse\x12E\n" +
 	"\fHashPassword\x12\x19.auth.HashPasswordRequest\x1a\x1a.auth.HashPasswordResponse\x12J\n" +
 	"\x10GeneratePassword\x12\x16.google.protobuf.Empty\x1a\x1e.auth.GeneratePasswordResponse\x12W\n" +
-	"\x12GetClaimsFromToken\x12\x1f.auth.GetClaimsFromTokenRequest\x1a .auth.GetClaimsFromTokenResponseB\x0fZ\rapi/auth;authb\x06proto3"
+	"\x12GetClaimsFromToken\x12\x1f.auth.GetClaimsFromTokenRequest\x1a .auth.GetClaimsFromTokenResponse\x12N\n" +
+	"\x0fComparePassword\x12\x1c.auth.ComparePasswordRequest\x1a\x1d.auth.ComparePasswordResponseB\x0fZ\rapi/auth;authb\x06proto3"
 
 var (
 	file_api_auth_service_proto_rawDescOnce sync.Once
@@ -367,7 +469,7 @@ func file_api_auth_service_proto_rawDescGZIP() []byte {
 	return file_api_auth_service_proto_rawDescData
 }
 
-var file_api_auth_service_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_api_auth_service_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_api_auth_service_proto_goTypes = []any{
 	(*GenerateTokenRequest)(nil),       // 0: auth.GenerateTokenRequest
 	(*GenerateTokenResponse)(nil),      // 1: auth.GenerateTokenResponse
@@ -376,24 +478,28 @@ var file_api_auth_service_proto_goTypes = []any{
 	(*GeneratePasswordResponse)(nil),   // 4: auth.GeneratePasswordResponse
 	(*GetClaimsFromTokenRequest)(nil),  // 5: auth.GetClaimsFromTokenRequest
 	(*GetClaimsFromTokenResponse)(nil), // 6: auth.GetClaimsFromTokenResponse
-	(*AuthClaims)(nil),                 // 7: models.AuthClaims
-	(*emptypb.Empty)(nil),              // 8: google.protobuf.Empty
+	(*ComparePasswordRequest)(nil),     // 7: auth.ComparePasswordRequest
+	(*ComparePasswordResponse)(nil),    // 8: auth.ComparePasswordResponse
+	(*AuthClaims)(nil),                 // 9: models.AuthClaims
+	(*emptypb.Empty)(nil),              // 10: google.protobuf.Empty
 }
 var file_api_auth_service_proto_depIdxs = []int32{
-	7, // 0: auth.GetClaimsFromTokenResponse.claims:type_name -> models.AuthClaims
-	0, // 1: auth.AuthService.GenerateToken:input_type -> auth.GenerateTokenRequest
-	2, // 2: auth.AuthService.HashPassword:input_type -> auth.HashPasswordRequest
-	8, // 3: auth.AuthService.GeneratePassword:input_type -> google.protobuf.Empty
-	5, // 4: auth.AuthService.GetClaimsFromToken:input_type -> auth.GetClaimsFromTokenRequest
-	1, // 5: auth.AuthService.GenerateToken:output_type -> auth.GenerateTokenResponse
-	3, // 6: auth.AuthService.HashPassword:output_type -> auth.HashPasswordResponse
-	4, // 7: auth.AuthService.GeneratePassword:output_type -> auth.GeneratePasswordResponse
-	6, // 8: auth.AuthService.GetClaimsFromToken:output_type -> auth.GetClaimsFromTokenResponse
-	5, // [5:9] is the sub-list for method output_type
-	1, // [1:5] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	9,  // 0: auth.GetClaimsFromTokenResponse.claims:type_name -> models.AuthClaims
+	0,  // 1: auth.AuthService.GenerateToken:input_type -> auth.GenerateTokenRequest
+	2,  // 2: auth.AuthService.HashPassword:input_type -> auth.HashPasswordRequest
+	10, // 3: auth.AuthService.GeneratePassword:input_type -> google.protobuf.Empty
+	5,  // 4: auth.AuthService.GetClaimsFromToken:input_type -> auth.GetClaimsFromTokenRequest
+	7,  // 5: auth.AuthService.ComparePassword:input_type -> auth.ComparePasswordRequest
+	1,  // 6: auth.AuthService.GenerateToken:output_type -> auth.GenerateTokenResponse
+	3,  // 7: auth.AuthService.HashPassword:output_type -> auth.HashPasswordResponse
+	4,  // 8: auth.AuthService.GeneratePassword:output_type -> auth.GeneratePasswordResponse
+	6,  // 9: auth.AuthService.GetClaimsFromToken:output_type -> auth.GetClaimsFromTokenResponse
+	8,  // 10: auth.AuthService.ComparePassword:output_type -> auth.ComparePasswordResponse
+	6,  // [6:11] is the sub-list for method output_type
+	1,  // [1:6] is the sub-list for method input_type
+	1,  // [1:1] is the sub-list for extension type_name
+	1,  // [1:1] is the sub-list for extension extendee
+	0,  // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_api_auth_service_proto_init() }
@@ -408,7 +514,7 @@ func file_api_auth_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_auth_service_proto_rawDesc), len(file_api_auth_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -49,9 +49,9 @@ func (s *AuthService) HashPassword(password string) (string, error) {
 	return string(hashedBytes), nil
 }
 
-func (s *AuthService) ComparePassword(hashedPassword, password string) bool {
+func (s *AuthService) ComparePassword(hashedPassword, password string) error {
 	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
-	return err == nil
+	return err
 }
 
 func (s *AuthService) GenerateJWT(accountID string) (string, error) {
